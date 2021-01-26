@@ -41,7 +41,7 @@ def home():
         f"/api/v1.0/stations<br/>"
         f"/api/v1.0/tobs<br/>"
         f"/api/v1.0/<start><br/>"
-         f"/api/v1.0/<start>/<end>"
+        f"/api/v1.0/<start>/<end>"
         
     )
 
@@ -104,11 +104,11 @@ def start(start):
     session = Session(engine)
 
     tmin = session.query(func.min(Measurement.tobs).label("Lowest")).\
-            filter(Measurement.date >= start_date).all()
+            filter(Measurement.date >= start_date).first()
     tmax = session.query(func.max(Measurement.tobs).label("Highest")).\
-            filter(Measurement.date >= start_date).all()
+            filter(Measurement.date >= start_date).first()
     tavg = session.query(func.avg(Measurement.tobs).label("Average")).\
-            filter(Measurement.date >= start_date).all()       
+            filter(Measurement.date >= start_date).first()       
 
     
     session.close()
@@ -131,11 +131,11 @@ def range(start,end):
     session = Session(engine)
 
     tmin = session.query(func.min(Measurement.tobs).label("Lowest")).\
-            filter(Measurement.date >= start_date).filter(Measurement.date <= end_date).all()
+            filter(Measurement.date >= start_date).filter(Measurement.date <= end_date).first()
     tmax = session.query(func.max(Measurement.tobs).label("Highest")).\
-            filter(Measurement.date >= start_date).filter(Measurement.date <= end_date).all()
+            filter(Measurement.date >= start_date).filter(Measurement.date <= end_date).first()
     tavg = session.query(func.avg(Measurement.tobs).label("Average")).\
-            filter(Measurement.date >= start_date).filter(Measurement.date <= end_date).all()       
+            filter(Measurement.date >= start_date).filter(Measurement.date <= end_date).first()       
 
     
     session.close()
